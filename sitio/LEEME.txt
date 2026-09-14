@@ -1,0 +1,35 @@
+Universal de Repuestos WG — carpeta del sitio
+==============================================
+
+Cómo usar esto
+--------------
+1. Descomprime/guarda esta carpeta completa en tu computador o en tu
+   hosting, manteniendo la misma estructura (no muevas index.html fuera
+   de aquí, y no renombres la carpeta img/).
+2. Abre index.html haciendo doble clic, o súbelo a tu hosting tal cual.
+3. Ve agregando las fotos de tus repuestos dentro de img/productos/
+   (lee el archivo img/productos/LEEME.txt: ahí está la lista exacta
+   de los 72 nombres de archivo que el catálogo espera).
+
+Estructura de carpetas
+-----------------------
+sitio/
+├── index.html                 ← el sitio completo (HTML + CSS + JS en un solo archivo)
+└── img/
+    ├── productos/              ← AQUÍ VAN LAS FOTOS DE CADA REPUESTO
+    │   └── LEEME.txt            (lista de los 72 nombres de archivo esperados)
+    └── hero/                   ← opcional, solo si más adelante cambias
+        └── LEEME.txt              la ilustración 3D del auto por una foto real
+
+Sobre los logos de marca (Chevrolet, Toyota, Renault, etc.)
+------------------------------------------------------------
+No necesitan carpeta: se cargan automáticamente desde un CDN público de
+logotipos de marca. Si alguno no cargara por cualquier motivo, el sitio
+muestra automáticamente las iniciales de la marca como respaldo.
+
+Sobre el auto del encabezado
+------------------------------
+Ya no es un dibujo plano: ahora tiene sombreado con volumen, rines con
+rayos, luces con resplandor y un reflejo tenue en el piso, y todo el
+conjunto se inclina en 3D real (con perspectiva CSS) siguiendo el
+cursor del mouse. No requiere ninguna imagen ni carpeta adicional.

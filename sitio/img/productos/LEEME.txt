@@ -1,0 +1,89 @@
+CARPETA DE IMAGENES DE PRODUCTOS - Universal de Repuestos WG
+======================================================================
+
+Coloca aqui las fotos de cada repuesto. El sitio busca EXACTAMENTE
+estos nombres de archivo (mismo nombre, misma extension .jpg,
+minusculas). Si subes una foto con otro nombre no se mostrara.
+
+Formato recomendado: fotos cuadradas o 4:3, fondo claro o blanco,
+máx. ~500 KB por imagen para que la web cargue rápido.
+
+Si por ahora no tienes la foto de un producto, no pasa nada:
+el sitio muestra automáticamente una imagen de marcador de
+posición con el nombre del repuesto mientras no exista el archivo.
+
+----------------------------------------------------------------------
+ARCHIVO         REFERENCIA            MARCA         PRODUCTO
+----------------------------------------------------------------------
+producto-01.jpg WG-001                Chevrolet     Radiador de NPR REWARD
+producto-02.jpg WG-002                Toyota        Radiador de aluminio
+producto-03.jpg WG-003                Renault       Kit de amortiguadores
+producto-04.jpg WG-004                Suzuki        Base de motor
+producto-05.jpg WG-005                Mazda         Alternador
+producto-06.jpg WG-006                Kia           Kit de distribución
+producto-07.jpg WG-007                Mitsubishi    Sensor de oxígeno
+producto-08.jpg WG-008                Nissan        Terminal de dirección
+producto-09.jpg WG-009                Chevrolet     Soporte de caja
+producto-10.jpg WG-010                Toyota        Termostato
+producto-11.jpg WG-011                Renault       Kit de bujías
+producto-12.jpg WG-012                Suzuki        Motor de arranque
+producto-13.jpg WG-013                Kia           Kit de juntas de motor
+producto-14.jpg WG-014                Nissan        Bomba de aceite
+producto-15.jpg WG-015                Chevrolet     Filtro de aceite
+producto-16.jpg WG-016                Mazda         Cadena de distribución
+producto-17.jpg WG-017                Toyota        Kit de pistones y anillos
+producto-18.jpg WG-018                Renault       Múltiple de admisión
+producto-19.jpg WG-019                Suzuki        Sensor de posición del cigüeñal
+producto-20.jpg WG-020                Mitsubishi    Correa poly-V
+producto-21.jpg WG-021                Chevrolet     Soporte de motor delantero
+producto-22.jpg WG-022                Toyota        Soporte de motor trasero
+producto-23.jpg WG-023                Kia           Soporte de caja automática
+producto-24.jpg WG-024                Nissan        Soporte de barra estabilizadora
+producto-25.jpg WG-025                Mazda         Soporte de radiador
+producto-26.jpg WG-026                Renault       Soporte de amortiguador
+producto-27.jpg WG-027                Suzuki        Rótula de suspensión
+producto-28.jpg WG-028                Mitsubishi    Bieleta de suspensión
+producto-29.jpg WG-029                Chevrolet     Buje de suspensión delantera
+producto-30.jpg WG-030                Toyota        Resorte helicoidal
+producto-31.jpg WG-031                Kia           Amortiguador trasero
+producto-32.jpg WG-032                Nissan        Caja de dirección
+producto-33.jpg WG-033                Mazda         Terminal de dirección derecho
+producto-34.jpg WG-034                Renault       Ventilador de radiador
+producto-35.jpg WG-035                Suzuki        Manguera superior de radiador
+producto-36.jpg WG-036                Mitsubishi    Tapa de radiador
+producto-37.jpg WG-037                Chevrolet     Sensor de temperatura del motor
+producto-38.jpg WG-038                Toyota        Depósito de refrigerante
+producto-39.jpg WG-039                Kia           Electroventilador
+producto-40.jpg WG-040                Nissan        Batería 12V
+producto-41.jpg WG-041                Mazda         Bobina de encendido
+producto-42.jpg WG-042                Renault       Módulo de control del motor
+producto-43.jpg WG-043                Chevrolet     Culata de motor
+producto-44.jpg WG-044                Toyota        Cárter de aceite
+producto-45.jpg WG-045                Renault       Filtro de aire
+producto-46.jpg WG-046                Suzuki        Filtro de combustible
+producto-47.jpg WG-047                Mazda         Bomba de combustible
+producto-48.jpg WG-048                Kia           Inyector de combustible
+producto-49.jpg WG-049                Mitsubishi    Turbocompresor
+producto-50.jpg WG-050                Nissan        Múltiple de escape
+producto-51.jpg WG-051                Chevrolet     Junta de culata
+producto-52.jpg WG-052                Toyota        Polea de cigüeñal
+producto-53.jpg WG-053                Renault       Soporte de motor lado derecho
+producto-54.jpg WG-054                Suzuki        Soporte de motor lado izquierdo
+producto-55.jpg WG-055                Mazda         Soporte de escape
+producto-56.jpg WG-056                Kia           Buje de soporte de motor
+producto-57.jpg WG-057                Mitsubishi    Soporte de radiador superior
+producto-58.jpg WG-058                Nissan        Rodamiento de rueda delantero
+producto-59.jpg WG-059                Chevrolet     Maza de rueda
+producto-60.jpg WG-060                Toyota        Rótula superior de suspensión
+producto-61.jpg WG-061                Renault       Bieleta delantera
+producto-62.jpg WG-062                Suzuki        Muelle trasero
+producto-63.jpg WG-063                Mazda         Buje de barra estabilizadora
+producto-64.jpg WG-064                Kia           Manguera inferior de radiador
+producto-65.jpg WG-065                Mitsubishi    Sensor de nivel de refrigerante
+producto-66.jpg WG-066                Nissan        Junta de bomba de agua
+producto-67.jpg WG-067                Chevrolet     Radiador de aceite
+producto-68.jpg WG-068                Toyota        Regulador de voltaje
+producto-69.jpg WG-069                Renault       Relé de arranque
+producto-70.jpg WG-070                Suzuki        Sensor ABS
+producto-71.jpg WG-071                Mazda         Motor de vidrios eléctricos
+producto-72.jpg WG-072                Kia           Módulo de airbag

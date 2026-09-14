@@ -1,0 +1,17 @@
+Esta carpeta es OPCIONAL.
+
+El vehículo del encabezado (hero) ya es una ilustración 3D hecha en SVG
+directamente en el código — no necesita ninguna imagen para funcionar.
+
+Solo usa esta carpeta si más adelante quieres reemplazar esa ilustración
+por una foto o un render real de un auto:
+
+  1. Guarda la imagen aquí, por ejemplo: img/hero/auto.png
+  2. En index.html, busca el comentario "VEHÍCULO DEL HERO — VERSIÓN 3D"
+     y sigue las instrucciones que están justo ahí: cambias el bloque
+     <svg> por un <img src="img/hero/auto.png"> dentro de #heroCarStage,
+     y ajustas los .hotspot (puntos interactivos) para que caigan sobre
+     las partes correctas de la nueva imagen.
+
+Si no vas a cambiar el auto del encabezado, puedes ignorar esta carpeta
+por completo.

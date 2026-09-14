@@ -1,0 +1,1698 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Universal de Repuestos WG | Repuestos Automotrices</title>
+
+<!-- Aplica el tema guardado ANTES de pintar la página, para evitar un parpadeo
+     de modo oscuro → modo claro al cargar. Si no hay preferencia guardada,
+     o el almacenamiento no está disponible, el sitio se mantiene en modo oscuro. -->
+<script>
+(function(){
+  try{
+    if(localStorage.getItem('wg-theme') === 'light'){
+      document.documentElement.setAttribute('data-theme','light');
+    }
+  }catch(e){ /* almacenamiento no disponible: se conserva el modo oscuro por defecto */ }
+})();
+</script>
+<meta name="description" content="Universal de Repuestos WG — Más de 15 años ofreciendo repuestos automotrices para Chevrolet, Toyota, Renault, Suzuki, Mazda, Kia, Mitsubishi y Nissan.">
+
+<!-- Open Graph básico -->
+<meta property="og:title" content="Universal de Repuestos WG | Repuestos Automotrices">
+<meta property="og:description" content="Más de 15 años de experiencia en la comercialización de repuestos automotrices en Colombia.">
+<meta property="og:type" content="website">
+
+<!-- Tipografías: Rajdhani para titulares técnicos / HUD, Inter para texto de lectura -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* =========================================================
+   VARIABLES DE MARCA — cambia aquí los colores del sitio
+   ========================================================= */
+:root{
+  --color-primary:#86c232;        /* verde del aviso físico de la tienda */
+  --color-primary-dark:#4f8a1c;   /* verde profundo, para gradientes y hover */
+  --color-primary-deep:#1c2e0d;   /* verde muy oscuro, casi negro */
+  --color-accent-text:#86c232;    /* verde usado como COLOR DE TEXTO (varía según el tema, ver abajo) */
+  --color-red:#e2231a;            /* rojo del logotipo del aviso físico */
+  --color-red-dark:#a81812;       /* rojo oscuro, para hover/gradientes */
+  --color-background:#07110b;     /* fondo general */
+  --color-background-rgb:7,17,11; /* mismo valor que --color-background, en formato "r,g,b" para usar con rgba() */
+  --color-surface:#0d1b12;        /* superficies / tarjetas */
+  --color-surface-2:#11241a;      /* superficies elevadas */
+  --color-line:#25381f;           /* líneas y bordes sutiles */
+  --color-text:#f4f7f5;           /* texto principal */
+  --color-text-muted:#9caa8e;     /* texto secundario */
+  --color-black:#050a07;
+  --color-black-rgb:5,10,7;       /* mismo valor que --color-black, en formato "r,g,b" */
+
+  --font-display:'Rajdhani',sans-serif;
+  --font-body:'Inter',sans-serif;
+
+  --radius-s:6px;
+  --radius-m:12px;
+  --radius-l:22px;
+
+  --ease:cubic-bezier(.16,.84,.44,1);
+
+  color-scheme:dark;
+}
+
+/* ---------------------------------------------------------
+   MODO CLARO
+   Se activa agregando el atributo data-theme="light" a <html>
+   (lo hace el botón de tema en la navbar). El verde de acento,
+   el rojo y la tipografía se mantienen iguales en ambos modos
+   para conservar la identidad de marca; lo que cambia son los
+   fondos, superficies y textos para asegurar buen contraste.
+   El --color-accent-text usa un verde más oscuro en modo claro
+   porque el verde brillante de marca no es suficientemente
+   legible como texto sobre fondos blancos.
+   --------------------------------------------------------- */
+:root[data-theme="light"]{
+  --color-accent-text:#3c6f14;
+  --color-background:#f5f7f1;
+  --color-background-rgb:245,247,241;
+  --color-surface:#ffffff;
+  --color-surface-2:#eef2e7;
+  --color-line:#dde3d3;
+  --color-text:#12180f;
+  --color-text-muted:#57634c;
+  color-scheme:light;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--color-background);
+  color:var(--color-text);
+  font-family:var(--font-body);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+ul{list-style:none;}
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+input{font:inherit;}
+
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:700;line-height:1.1;letter-spacing:.2px;}
+
+.container{
+  width:100%;
+  max-width:1240px;
+  margin:0 auto;
+  padding:0 clamp(20px,4vw,48px);
+}
+
+section{position:relative;padding:96px 0;}
+.section-head{max-width:620px;margin-bottom:48px;}
+.section-head .kicker{
+  color:var(--color-accent-text);
+  font-family:var(--font-display);
+  font-weight:600;
+  font-size:.95rem;
+  display:block;
+  margin-bottom:10px;
+}
+.section-head h2{font-size:clamp(1.9rem,3.4vw,2.7rem);}
+.section-head p{color:var(--color-text-muted);margin-top:14px;font-size:1.02rem;max-width:56ch;}
+
+/* Foco visible accesible */
+a:focus-visible,button:focus-visible,input:focus-visible{
+  outline:2px solid var(--color-primary);
+  outline-offset:3px;
+  border-radius:4px;
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;scroll-behavior:auto !important;}
+}
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+.navbar{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  padding:20px 0;
+  transition:padding .35s var(--ease),background .35s var(--ease),border-color .35s var(--ease);
+  border-bottom:1px solid transparent;
+}
+.navbar.scrolled{
+  padding:12px 0;
+  background:rgba(var(--color-background-rgb),.72);
+  backdrop-filter:blur(14px) saturate(140%);
+  -webkit-backdrop-filter:blur(14px) saturate(140%);
+  border-bottom:1px solid var(--color-line);
+}
+.navbar .container{display:flex;align-items:center;justify-content:space-between;gap:24px;}
+
+.brand{display:flex;align-items:center;gap:11px;}
+.brand-mark{
+  width:38px;height:38px;border-radius:9px;
+  background:linear-gradient(150deg,var(--color-primary),var(--color-primary-dark));
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-weight:700;color:var(--color-red);font-size:1.05rem;
+  -webkit-text-stroke:.4px rgba(255,255,255,.5);
+  box-shadow:0 0 22px rgba(134,194,50,.45);
+}
+.brand-text{font-family:var(--font-display);font-weight:700;font-size:1.08rem;line-height:1.1;}
+.brand-text span{display:block;font-family:var(--font-body);font-weight:500;font-size:.68rem;color:var(--color-text-muted);letter-spacing:.4px;}
+
+.nav-links{display:flex;align-items:center;gap:2px;}
+.nav-links a{
+  padding:9px 16px;border-radius:99px;font-size:.94rem;color:var(--color-text-muted);
+  transition:color .25s,background .25s;
+}
+.nav-links a:hover{color:var(--color-text);background:rgba(255,255,255,.05);}
+
+.nav-cta{
+  display:flex;align-items:center;gap:8px;
+  padding:10px 18px;border-radius:99px;
+  background:var(--color-primary);color:#04150a;font-weight:600;font-size:.92rem;
+  transition:transform .25s var(--ease),box-shadow .25s var(--ease);
+}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(134,194,50,.35);}
+
+.navbar-controls{display:flex;align-items:center;gap:10px;}
+
+.theme-toggle{
+  width:38px;height:38px;border-radius:50%;
+  border:1px solid var(--color-line);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--color-text);
+  transition:border-color .25s,transform .25s,color .25s;
+}
+.theme-toggle:hover{border-color:var(--color-primary);color:var(--color-primary);transform:translateY(-2px);}
+.theme-toggle .icon-sun{display:none;}
+:root[data-theme="light"] .theme-toggle .icon-moon{display:none;}
+:root[data-theme="light"] .theme-toggle .icon-sun{display:block;}
+
+.nav-toggle{display:none;flex-direction:column;gap:5px;width:34px;height:34px;align-items:center;justify-content:center;}
+.nav-toggle span{width:22px;height:2px;background:var(--color-text);transition:transform .3s var(--ease),opacity .3s;}
+.nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.nav-toggle.open span:nth-child(2){opacity:0;}
+.nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+@media (max-width:900px){
+  .nav-links{
+    position:fixed;top:0;right:0;height:100vh;width:min(300px,80vw);
+    background:var(--color-surface);
+    flex-direction:column;align-items:flex-start;gap:4px;
+    padding:96px 28px 28px;
+    transform:translateX(100%);
+    transition:transform .4s var(--ease);
+    border-left:1px solid var(--color-line);
+  }
+  .nav-links.open{transform:translateX(0);}
+  .nav-links a{width:100%;padding:14px 10px;font-size:1.05rem;}
+  .nav-cta{display:none;}
+  .nav-toggle{display:flex;}
+}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero{
+  padding:170px 0 90px;
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:"";position:absolute;inset:-20% -10% auto -10%;height:700px;
+  background:radial-gradient(ellipse at 30% 20%,rgba(134,194,50,.16),transparent 60%);
+  pointer-events:none;
+}
+.hero-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;
+}
+.hero-copy .kicker{
+  display:inline-flex;align-items:center;gap:8px;
+  color:var(--color-accent-text);font-family:var(--font-display);font-weight:600;
+  font-size:.9rem;margin-bottom:22px;
+  padding:7px 14px;border:1px solid var(--color-line);border-radius:99px;
+  background:rgba(134,194,50,.06);
+}
+.kicker-dot{width:6px;height:6px;border-radius:50%;background:var(--color-primary);box-shadow:0 0 8px var(--color-primary);}
+.hero-copy h1{
+  font-size:clamp(2.4rem,5vw,3.7rem);
+  margin-bottom:20px;
+}
+.hero-copy h1 em{
+  font-style:normal;
+  color:var(--color-accent-text);
+}
+.hero-copy p{
+  color:var(--color-text-muted);
+  font-size:1.08rem;
+  max-width:46ch;
+  margin-bottom:34px;
+}
+.hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:44px;}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:14px 26px;border-radius:99px;font-weight:600;font-size:.97rem;
+  transition:transform .25s var(--ease),box-shadow .25s var(--ease),background .25s;
+}
+.btn-primary{background:var(--color-primary);color:#04150a;}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(134,194,50,.35);}
+.btn-ghost{border:1px solid var(--color-line);color:var(--color-text);}
+.btn-ghost:hover{border-color:var(--color-primary);background:rgba(134,194,50,.06);}
+
+.hero-stats{display:flex;gap:34px;flex-wrap:wrap;}
+.hero-stats div strong{display:block;font-family:var(--font-display);font-size:1.6rem;color:var(--color-accent-text);}
+.hero-stats div span{font-size:.82rem;color:var(--color-text-muted);}
+
+/* --- Vehículo del hero ---
+   El panel del vehículo se mantiene siempre oscuro, incluso en modo claro:
+   funciona como una pantalla de diagnóstico automotriz y es el elemento
+   más distintivo del sitio, así que conserva su propia identidad visual
+   sin importar el tema del resto de la página. */
+.hero-car-wrap{
+  position:relative;
+  aspect-ratio:8/5;
+  display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle at 50% 38%,#0f1e14,var(--color-black) 75%);
+  border-radius:var(--radius-l);
+  box-shadow:0 30px 60px -20px rgba(0,0,0,.5);
+  perspective:1400px; /* espacio 3D en el que se inclina .hero-car-stage */
+}
+
+/* --- Escenario 3D del vehículo ---
+   Envuelve el SVG y los hotspots como una sola unidad rígida: al
+   inclinarla con rotateX/rotateY (por CSS en reposo, o por JS al mover
+   el mouse), el auto y sus puntos interactivos giran juntos, así que
+   los hotspots siguen apuntando siempre a la parte correcta del dibujo. */
+.hero-car-stage{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  transform-style:preserve-3d;
+  transform:perspective(1400px) rotateX(6deg) rotateY(-10deg);
+  transition:transform .5s var(--ease);
+  animation:heroIdleTilt 7s ease-in-out infinite;
+  will-change:transform;
+}
+/* Mientras el usuario mueve el mouse, JS agrega esta clase para apagar
+   la animación automática y tomar el control total de la inclinación. */
+.hero-car-stage.stage-manual{ animation:none; }
+
+@keyframes heroIdleTilt{
+  0%,100%{ transform:perspective(1400px) rotateX(6deg) rotateY(-10deg); }
+  50%{ transform:perspective(1400px) rotateX(3deg) rotateY(5deg); }
+}
+
+/* brillo diagonal que recorre lentamente la carrocería, como el reflejo
+   de una pintura automotriz bajo luz de estudio */
+.hero-shine{ animation:heroShineSweep 5s ease-in-out infinite; }
+@keyframes heroShineSweep{
+  0%,100%{ transform:translate(140px,-40px) rotate(18deg); opacity:.4; }
+  50%{ transform:translate(360px,-40px) rotate(18deg); opacity:.9; }
+}
+.hero-car-scan{
+  position:absolute;inset:6%;
+  border:1px solid rgba(134,194,50,.25);
+  border-radius:var(--radius-l);
+}
+.hero-car-scan::before,.hero-car-scan::after{
+  content:"";position:absolute;width:18px;height:18px;border-color:var(--color-primary);
+}
+.hero-car-scan::before{top:-1px;left:-1px;border-top:2px solid;border-left:2px solid;}
+.hero-car-scan::after{bottom:-1px;right:-1px;border-bottom:2px solid;border-right:2px solid;}
+
+.hero-car-svg{position:relative;width:100%;z-index:2;filter:drop-shadow(0 25px 45px rgba(0,0,0,.55));}
+
+/* Línea de escaneo animada sobre el vehículo */
+.scan-line{
+  position:absolute;left:6%;right:6%;height:2px;
+  background:linear-gradient(90deg,transparent,var(--color-primary),transparent);
+  top:10%;
+  animation:scan 4.5s ease-in-out infinite;
+  opacity:.75;
+  z-index:3;
+  pointer-events:none;
+}
+@keyframes scan{
+  0%,100%{top:14%;opacity:0;}
+  10%{opacity:.8;}
+  50%{top:84%;opacity:.8;}
+  60%{opacity:0;}
+}
+
+/* Hotspots interactivos sobre el auto */
+.hotspot{
+  position:absolute;
+  width:16px;height:16px;
+  transform:translate(-50%,-50%);
+  z-index:4;
+}
+.hotspot-dot{
+  display:block;width:16px;height:16px;border-radius:50%;
+  background:var(--color-surface-2);
+  border:2px solid var(--color-primary);
+  box-shadow:0 0 0 0 rgba(134,194,50,.5);
+  animation:pulse 2.6s ease-out infinite;
+  transition:background .25s,transform .25s;
+}
+.hotspot:hover .hotspot-dot,.hotspot:focus-visible .hotspot-dot{
+  background:var(--color-primary);
+  transform:scale(1.15);
+}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(134,194,50,.45);}
+  70%{box-shadow:0 0 0 12px rgba(134,194,50,0);}
+  100%{box-shadow:0 0 0 0 rgba(134,194,50,0);}
+}
+.hotspot-line{
+  position:absolute;left:50%;bottom:100%;width:1px;height:38px;
+  background:linear-gradient(to top,var(--color-primary),transparent);
+  transform:translateX(-50%) scaleY(0);
+  transform-origin:bottom;
+  transition:transform .3s var(--ease);
+}
+.hotspot[data-side="down"] .hotspot-line{
+  bottom:auto;top:100%;transform:translateX(-50%) scaleY(0);
+  background:linear-gradient(to bottom,var(--color-primary),transparent);
+}
+.hotspot:hover .hotspot-line,.hotspot:focus-visible .hotspot-line{transform:translateX(-50%) scaleY(1);}
+
+.hotspot-label{
+  position:absolute;left:50%;bottom:calc(100% + 40px);
+  transform:translate(-50%,6px);
+  white-space:nowrap;
+  background:#11241a;               /* fijo: el panel del vehículo siempre es oscuro */
+  border:1px solid #25381f;         /* fijo, no depende del tema claro/oscuro */
+  color:#f4f7f5;                    /* fijo, para contraste sobre el panel oscuro */
+  padding:8px 13px;border-radius:var(--radius-s);
+  font-size:.82rem;font-weight:600;font-family:var(--font-display);letter-spacing:.3px;
+  opacity:0;pointer-events:none;
+  transition:opacity .25s var(--ease),transform .25s var(--ease);
+}
+.hotspot[data-side="down"] .hotspot-label{
+  bottom:auto;top:calc(100% + 40px);transform:translate(-50%,-6px);
+}
+.hotspot:hover .hotspot-label,.hotspot:focus-visible .hotspot-label{
+  opacity:1;transform:translate(-50%,0);
+}
+
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr;}
+  .hero-copy{order:1;text-align:left;}
+  .hero-car-wrap{order:0;aspect-ratio:4/3;margin-bottom:8px;}
+  .hotspot-label{font-size:.72rem;padding:6px 10px;}
+}
+
+/* =========================================================
+   CATEGORÍAS
+   ========================================================= */
+.categories-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:18px;
+}
+.category-card{
+  background:var(--color-surface);
+  border:1px solid var(--color-line);
+  border-radius:var(--radius-m);
+  padding:26px 22px;
+  transition:transform .3s var(--ease),border-color .3s,background .3s;
+  text-align:left;
+  cursor:pointer;
+}
+.category-card:hover{
+  transform:translateY(-6px);
+  border-color:var(--color-primary);
+  background:var(--color-surface-2);
+}
+.category-icon{
+  width:46px;height:46px;border-radius:var(--radius-s);
+  background:rgba(134,194,50,.1);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:18px;
+  color:var(--color-accent-text);
+}
+.category-card h3{font-size:1.08rem;margin-bottom:6px;}
+.category-card p{color:var(--color-text-muted);font-size:.87rem;margin-bottom:14px;}
+.category-count{font-size:.78rem;color:var(--color-accent-text);font-family:var(--font-display);font-weight:600;}
+
+@media (max-width:1000px){.categories-grid{grid-template-columns:repeat(3,1fr);}}
+@media (max-width:640px){.categories-grid{grid-template-columns:repeat(2,1fr);}}
+
+/* =========================================================
+   CATÁLOGO
+   ========================================================= */
+.catalog-toolbar{
+  display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;align-items:flex-end;
+  margin-bottom:34px;
+  padding-bottom:28px;border-bottom:1px solid var(--color-line);
+}
+.search-field{
+  position:relative;flex:1 1 320px;max-width:420px;
+}
+.search-field input{
+  width:100%;padding:13px 16px 13px 42px;
+  background:var(--color-surface);border:1px solid var(--color-line);border-radius:99px;
+  color:var(--color-text);font-size:.94rem;
+  transition:border-color .25s;
+}
+.search-field input::placeholder{color:var(--color-text-muted);}
+.search-field input:focus{border-color:var(--color-primary);outline:none;}
+.search-field svg{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--color-text-muted);}
+
+.filters{display:flex;flex-wrap:wrap;gap:22px;}
+.filter-group{display:flex;flex-direction:column;gap:8px;}
+.filter-group span{font-size:.74rem;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-muted);}
+.chip-row{display:flex;flex-wrap:wrap;gap:8px;max-width:520px;}
+.chip{
+  padding:7px 14px;border-radius:99px;border:1px solid var(--color-line);
+  font-size:.82rem;color:var(--color-text-muted);
+  transition:all .22s var(--ease);
+}
+.chip:hover{border-color:var(--color-primary);color:var(--color-text);}
+.chip.active{background:var(--color-primary);border-color:var(--color-primary);color:#04150a;font-weight:600;}
+
+.results-meta{color:var(--color-text-muted);font-size:.88rem;margin-bottom:22px;}
+.results-meta strong{color:var(--color-accent-text);}
+
+.product-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:22px;
+}
+@media (max-width:1100px){.product-grid{grid-template-columns:repeat(3,1fr);}}
+@media (max-width:760px){.product-grid{grid-template-columns:repeat(2,1fr);}}
+@media (max-width:480px){.product-grid{grid-template-columns:1fr;}}
+
+.product-card{
+  background:var(--color-surface);
+  border:1px solid var(--color-line);
+  border-radius:var(--radius-m);
+  overflow:hidden;
+  transition:transform .32s var(--ease),border-color .32s,box-shadow .32s;
+  display:flex;flex-direction:column;
+}
+.product-card:hover{
+  transform:translateY(-6px);
+  border-color:var(--color-primary);
+  box-shadow:0 22px 40px rgba(0,0,0,.4);
+}
+.product-media{
+  aspect-ratio:4/3;overflow:hidden;background:var(--color-surface-2);
+  position:relative;
+}
+.product-media img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease);}
+.product-card:hover .product-media img{transform:scale(1.08);}
+.product-tag{
+  position:absolute;top:10px;left:10px;
+  background:rgba(5,10,7,.75);backdrop-filter:blur(4px);
+  border:1px solid var(--color-line);
+  padding:4px 10px;border-radius:99px;font-size:.68rem;color:var(--color-accent-text);font-weight:600;
+}
+.product-body{padding:18px 18px 20px;display:flex;flex-direction:column;gap:8px;flex:1;}
+.product-brand{font-size:.72rem;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.8px;}
+.product-body h3{font-size:1.02rem;font-weight:600;font-family:var(--font-body);}
+.product-ref{font-size:.76rem;color:var(--color-text-muted);}
+.product-desc{font-size:.84rem;color:var(--color-text-muted);flex:1;}
+.product-actions{display:flex;gap:10px;margin-top:10px;}
+.btn-card{
+  flex:1;text-align:center;padding:10px 12px;border-radius:var(--radius-s);
+  font-size:.84rem;font-weight:600;
+  border:1px solid var(--color-line);
+  transition:all .25s var(--ease);
+}
+.btn-card.primary{background:var(--color-primary);color:#04150a;border-color:var(--color-primary);}
+.btn-card.primary:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(134,194,50,.3);}
+.btn-card.ghost:hover{border-color:var(--color-primary);color:var(--color-accent-text);}
+
+.empty-state{
+  text-align:center;padding:70px 20px;color:var(--color-text-muted);
+  border:1px dashed var(--color-line);border-radius:var(--radius-m);
+  display:none;
+}
+.empty-state.visible{display:block;}
+.empty-state h3{color:var(--color-text);margin-bottom:8px;font-size:1.2rem;}
+
+.catalog-loadmore{display:flex;justify-content:center;margin-top:36px;}
+
+/* =========================================================
+   MARCAS
+   ========================================================= */
+.brands-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:14px;
+}
+.brand-tile{
+  background:var(--color-surface);
+  border:1px solid var(--color-line);
+  border-radius:var(--radius-m);
+  padding:26px 16px;
+  text-align:center;
+  transition:all .28s var(--ease);
+}
+.brand-tile:hover{border-color:var(--color-primary);background:var(--color-surface-2);transform:translateY(-4px);}
+
+/* .brand-badge apila el logotipo real (si existe) sobre el distintivo
+   tipográfico de iniciales. Si la imagen del logo carga correctamente,
+   cubre las iniciales; si falla (archivo no encontrado), se elimina y
+   las iniciales quedan visibles como respaldo. Ver renderMarcas() en el
+   JavaScript y el comentario sobre img/marcas/ para más detalle. */
+.brand-badge{
+  position:relative;
+  width:52px;height:52px;border-radius:50%;
+  margin:0 auto 14px;
+}
+.brand-initial{
+  position:absolute;inset:0;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-weight:700;font-size:1.2rem;
+  background:linear-gradient(150deg,rgba(134,194,50,.18),rgba(134,194,50,.02));
+  border:1px solid var(--color-line);
+  color:var(--color-accent-text);
+}
+.brand-logo-img{
+  position:absolute;inset:0;
+  width:100%;height:100%;border-radius:50%;
+  object-fit:contain;padding:9px;
+  background:var(--color-surface);
+  border:1px solid var(--color-line);
+}
+.brand-tile span{font-size:.92rem;font-weight:600;}
+@media (max-width:900px){.brands-grid{grid-template-columns:repeat(3,1fr);}}
+@media (max-width:560px){.brands-grid{grid-template-columns:repeat(2,1fr);}}
+
+/* =========================================================
+   NOSOTROS
+   ========================================================= */
+.about-grid{
+  display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center;
+}
+.about-copy p{color:var(--color-text-muted);margin-bottom:16px;max-width:58ch;}
+.about-list{margin-top:26px;display:grid;gap:12px;}
+.about-list li{display:flex;gap:12px;align-items:flex-start;font-size:.94rem;color:var(--color-text-muted);}
+.about-list li svg{flex-shrink:0;color:var(--color-accent-text);margin-top:3px;}
+.about-stats{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.stat-card{
+  background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius-m);
+  padding:26px 22px;
+}
+.stat-card strong{
+  display:block;font-family:var(--font-display);font-size:2.1rem;color:var(--color-accent-text);
+}
+.stat-card span{font-size:.85rem;color:var(--color-text-muted);}
+.stat-card.wide{grid-column:1 / -1;}
+
+@media (max-width:900px){.about-grid{grid-template-columns:1fr;}}
+
+/* =========================================================
+   CONTACTO
+   ========================================================= */
+.contact-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:22px;
+}
+.contact-card{
+  background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius-m);
+  padding:26px;display:flex;gap:16px;align-items:flex-start;
+}
+.contact-card .icon{
+  width:42px;height:42px;border-radius:var(--radius-s);background:rgba(134,194,50,.1);
+  display:flex;align-items:center;justify-content:center;color:var(--color-accent-text);flex-shrink:0;
+}
+.contact-card h4{font-size:.98rem;margin-bottom:4px;font-family:var(--font-body);font-weight:600;}
+.contact-card p{color:var(--color-text-muted);font-size:.9rem;}
+@media (max-width:760px){.contact-grid{grid-template-columns:1fr;}}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+footer{
+  border-top:1px solid var(--color-line);
+  padding:64px 0 28px;
+  background:var(--color-black);
+}
+.footer-grid{
+  display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px;
+}
+.footer-brand p{color:var(--color-text-muted);font-size:.88rem;margin-top:14px;max-width:34ch;}
+.footer-col h4{font-size:.82rem;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-muted);margin-bottom:16px;}
+.footer-col ul{display:grid;gap:10px;}
+.footer-col a{font-size:.9rem;color:var(--color-text-muted);transition:color .2s;}
+.footer-col a:hover{color:var(--color-accent-text);}
+.footer-bottom{
+  border-top:1px solid var(--color-line);padding-top:22px;
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  font-size:.8rem;color:var(--color-text-muted);
+}
+@media (max-width:800px){.footer-grid{grid-template-columns:1fr 1fr;}}
+@media (max-width:480px){.footer-grid{grid-template-columns:1fr;}}
+
+/* =========================================================
+   WHATSAPP FLOTANTE
+   ========================================================= */
+.whatsapp-float{
+  position:fixed;bottom:24px;right:24px;z-index:900;
+  width:58px;height:58px;border-radius:50%;
+  background:var(--color-primary);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 14px 30px rgba(134,194,50,.4);
+  transition:transform .25s var(--ease);
+}
+.whatsapp-float:hover{transform:scale(1.08);}
+.whatsapp-float svg{color:#04150a;}
+
+/* =========================================================
+   MODAL DE PRODUCTO
+   ========================================================= */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(var(--color-black-rgb),.78);backdrop-filter:blur(4px);
+  z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;
+  opacity:0;pointer-events:none;transition:opacity .3s var(--ease);
+}
+.modal-overlay.open{opacity:1;pointer-events:auto;}
+.modal-box{
+  background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius-l);
+  max-width:820px;width:100%;max-height:88vh;overflow:auto;
+  display:grid;grid-template-columns:1fr 1fr;
+  transform:translateY(24px) scale(.97);opacity:0;
+  transition:transform .35s var(--ease),opacity .35s var(--ease);
+}
+.modal-overlay.open .modal-box{transform:translateY(0) scale(1);opacity:1;}
+.modal-media{background:var(--color-surface-2);}
+.modal-media img{width:100%;height:100%;object-fit:cover;min-height:260px;}
+.modal-info{padding:32px;position:relative;}
+.modal-close{
+  position:absolute;top:18px;right:18px;
+  width:36px;height:36px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--color-line);color:var(--color-text-muted);
+  transition:all .2s;
+}
+.modal-close:hover{border-color:var(--color-primary);color:var(--color-accent-text);}
+.modal-info .product-brand{margin-bottom:6px;}
+.modal-info h3{font-size:1.5rem;font-family:var(--font-display);margin-bottom:10px;}
+.modal-meta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;}
+.modal-meta span{
+  font-size:.76rem;padding:5px 11px;border-radius:99px;border:1px solid var(--color-line);color:var(--color-text-muted);
+}
+.modal-info p.desc{color:var(--color-text-muted);margin-bottom:26px;}
+@media (max-width:700px){.modal-box{grid-template-columns:1fr;}.modal-media img{min-height:200px;}}
+
+/* =========================================================
+   REVEAL EN SCROLL
+   ========================================================= */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s var(--ease),transform .7s var(--ease);}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+.visually-hidden{
+  position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;
+}
+</style>
+</head>
+<body>
+
+<a href="#main" class="visually-hidden">Saltar al contenido principal</a>
+
+<!-- ==================== NAVBAR ==================== -->
+<header class="navbar" id="navbar">
+  <div class="container">
+    <a href="#inicio" class="brand" aria-label="Universal de Repuestos WG, ir al inicio">
+      <span class="brand-mark" aria-hidden="true">WG</span>
+      <span class="brand-text">UNIVERSAL DE REPUESTOS<span>Repuestos automotrices · desde hace 15+ años</span></span>
+    </a>
+
+    <nav id="navLinks" class="nav-links" aria-label="Navegación principal">
+      <a href="#inicio">Inicio</a>
+      <a href="#catalogo">Catálogo</a>
+      <a href="#categorias">Categorías</a>
+      <a href="#marcas">Marcas</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#contacto">Contacto</a>
+      <a href="#catalogo" class="nav-cta">Ver catálogo</a>
+    </nav>
+
+    <div class="navbar-controls">
+      <button class="theme-toggle" id="themeToggle" aria-label="Cambiar a modo claro" aria-pressed="false">
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.7"/><path d="M12 2.5v2.4M12 19.1v2.4M4.6 4.6l1.7 1.7M17.7 17.7l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.6 19.4l1.7-1.7M17.7 6.3l1.7-1.7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+      </button>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ==================== HERO ==================== -->
+<section class="hero" id="inicio">
+  <div class="container hero-grid">
+
+    <div class="hero-copy">
+      <span class="kicker"><span class="kicker-dot"></span>Repuestos automotrices · Colombia</span>
+      <h1>Diagnóstico visual de tu vehículo, <em>directo al repuesto correcto</em></h1>
+      <p>Más de 15 años surtiendo talleres y conductores con repuestos originales y alternativos para las marcas más rodadas del país. Explora el vehículo, toca un punto y encuentra la pieza que necesitas.</p>
+      <div class="hero-actions">
+        <a href="#catalogo" class="btn btn-primary">Explorar catálogo</a>
+        <a href="#nosotros" class="btn btn-ghost">Conocer la empresa</a>
+      </div>
+      <div class="hero-stats">
+        <div><strong>15+</strong><span>años de experiencia</span></div>
+        <div><strong>8</strong><span>marcas especializadas</span></div>
+        <div><strong>5</strong><span>categorías principales</span></div>
+      </div>
+    </div>
+
+    <div class="hero-car-wrap" id="heroCarWrap">
+      <div class="hero-car-scan" aria-hidden="true"></div>
+      <div class="scan-line" aria-hidden="true"></div>
+
+      <!--
+        VEHÍCULO DEL HERO — VERSIÓN "3D"
+        Sigue siendo una ilustración vectorial propia (SVG), sin archivos
+        externos, pero ahora con:
+          1) Sombreado multi-tono (capó/techo más claros, zócalo más
+             oscuro) recortado a la silueta con <clipPath>, para simular
+             el volumen curvo de la carrocería.
+          2) Rines con rayos y gradiente metálico, en vez de círculos planos.
+          3) Faros y stop con resplandor (radialGradient + filtro glow).
+          4) Un reflejo tenue en el "piso" (el mismo dibujo, espejado y
+             aplastado verticalmente).
+          5) Un contenedor .hero-car-stage con perspectiva CSS que se
+             inclina levemente solo (idleTilt) y sigue el cursor al pasar
+             el mouse por encima — el efecto de profundidad real vive en
+             JS/CSS, no en el SVG.
+        Para usar una fotografía o modelo real de la empresa, sustituye
+        el <svg> por una <img src="img/hero/auto.png"> DENTRO de
+        #heroCarStage (para conservar la inclinación 3D) y reubica los
+        .hotspot con las mismas coordenadas porcentuales.
+      -->
+      <div class="hero-car-stage" id="heroCarStage">
+      <svg class="hero-car-svg" viewBox="0 0 800 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ilustración de un automóvil en vista lateral con puntos interactivos sobre sus componentes">
+        <defs>
+          <linearGradient id="bodyGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1c3d26"/>
+            <stop offset="55%" stop-color="#122a1a"/>
+            <stop offset="100%" stop-color="#081b10"/>
+          </linearGradient>
+          <linearGradient id="glassGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#2c6039"/>
+            <stop offset="100%" stop-color="#0c2416"/>
+          </linearGradient>
+          <radialGradient id="wheelGrad" cx="50%" cy="40%" r="65%">
+            <stop offset="0%" stop-color="#1c3324"/>
+            <stop offset="100%" stop-color="#040a06"/>
+          </radialGradient>
+          <radialGradient id="rimGrad" cx="42%" cy="35%" r="65%">
+            <stop offset="0%" stop-color="#d7e8c6"/>
+            <stop offset="45%" stop-color="#86c232"/>
+            <stop offset="100%" stop-color="#1c3324"/>
+          </radialGradient>
+          <radialGradient id="sheenGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#ffffff" stop-opacity=".55"/>
+            <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="rockerGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#000000" stop-opacity="0"/>
+            <stop offset="100%" stop-color="#000000" stop-opacity=".65"/>
+          </linearGradient>
+          <linearGradient id="streakGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#ffffff" stop-opacity="0"/>
+            <stop offset="50%" stop-color="#ffffff" stop-opacity=".4"/>
+            <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+          </linearGradient>
+          <radialGradient id="headlightGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#eaffcf"/>
+            <stop offset="55%" stop-color="#86c232"/>
+            <stop offset="100%" stop-color="#86c232" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="taillightGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#ffb2a6"/>
+            <stop offset="55%" stop-color="#e2231a"/>
+            <stop offset="100%" stop-color="#e2231a" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="reflMaskGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#ffffff"/>
+            <stop offset="100%" stop-color="#000000"/>
+          </linearGradient>
+          <mask id="reflFade">
+            <rect x="0" y="290" width="800" height="50" fill="url(#reflMaskGrad)"/>
+          </mask>
+          <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="6" result="blur"/>
+            <feMerge>
+              <feMergeNode in="blur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+          <filter id="reflBlur" x="-20%" y="-40%" width="140%" height="180%">
+            <feGaussianBlur stdDeviation="3.5"/>
+          </filter>
+
+          <!-- silueta de la carrocería, reutilizada como pintura y como clipPath -->
+          <path id="bodyPath" d="M70,235 C70,190 110,175 150,168 L190,120 C205,100 230,88 258,88 L470,88 C500,88 528,98 550,120 L600,168 C660,172 715,182 745,205 C758,214 760,228 754,238 L740,238 C740,214 720,198 696,198 C672,198 654,214 652,238 L268,238 C266,214 248,198 224,198 C200,198 182,214 180,238 L92,238 C78,238 70,232 70,222 Z"/>
+          <clipPath id="carBodyClip"><use href="#bodyPath"/></clipPath>
+
+          <!-- toda la ilustración del auto, agrupada para poder reutilizarla en el reflejo -->
+          <g id="carGroup">
+            <!-- carrocería base -->
+            <use href="#bodyPath" fill="url(#bodyGrad)" stroke="#86c232" stroke-width="1.5" filter="url(#glow)"/>
+
+            <!-- sombreado 3D recortado a la silueta: da la sensación de volumen curvo -->
+            <g clip-path="url(#carBodyClip)">
+              <ellipse cx="330" cy="105" rx="260" ry="95" fill="url(#sheenGrad)" style="mix-blend-mode:screen"/>
+              <rect x="60" y="203" width="700" height="42" fill="url(#rockerGrad)"/>
+              <rect x="0" y="0" width="55" height="420" fill="url(#streakGrad)" transform="translate(255,-40) rotate(18)" class="hero-shine"/>
+            </g>
+
+            <!-- ventanas, con leve reflejo de cielo -->
+            <path d="M205,164 L238,124 C248,111 264,103 281,103 L385,103 L385,164 Z" fill="url(#glassGrad)" stroke="#0f2a1a" stroke-width="1"/>
+            <path d="M395,103 L462,103 C480,103 497,110 508,123 L536,164 L395,164 Z" fill="url(#glassGrad)" stroke="#0f2a1a" stroke-width="1"/>
+            <line x1="388" y1="103" x2="388" y2="164" stroke="#04150a" stroke-width="3"/>
+            <path d="M215,150 L245,120 L255,120 L228,155 Z" fill="#ffffff" opacity=".18"/>
+            <path d="M405,110 L430,110 L465,150 L440,150 Z" fill="#ffffff" opacity=".14"/>
+
+            <!-- línea de carácter / chasis, con brillo tipo cromo -->
+            <line x1="180" y1="232" x2="652" y2="232" stroke="#0f2a1a" stroke-width="6"/>
+            <line x1="180" y1="232" x2="652" y2="232" stroke="#86c232" stroke-width="1" stroke-dasharray="4 6" opacity=".6"/>
+            <line x1="150" y1="167" x2="600" y2="167" stroke="#ffffff" stroke-width="1" opacity=".22"/>
+
+            <!-- faros con resplandor -->
+            <rect x="722" y="192" width="22" height="14" rx="4" fill="url(#headlightGrad)" filter="url(#glow)"/>
+            <rect x="70" y="210" width="18" height="11" rx="3" fill="url(#taillightGrad)" filter="url(#glow)"/>
+
+            <!-- puertas -->
+            <line x1="388" y1="168" x2="388" y2="238" stroke="#0f2a1a" stroke-width="2"/>
+            <line x1="520" y1="172" x2="516" y2="238" stroke="#0f2a1a" stroke-width="2"/>
+
+            <!-- ruedas: llanta, rin metálico con rayos, resalte especular -->
+            <g>
+              <circle cx="224" cy="238" r="42" fill="url(#wheelGrad)" stroke="#1c3324" stroke-width="6"/>
+              <circle cx="224" cy="238" r="24" fill="url(#rimGrad)"/>
+              <g stroke="#0d1b12" stroke-width="4" stroke-linecap="round">
+                <line x1="224" y1="238" x2="224" y2="216" transform="rotate(0 224 238)"/>
+                <line x1="224" y1="238" x2="224" y2="216" transform="rotate(72 224 238)"/>
+                <line x1="224" y1="238" x2="224" y2="216" transform="rotate(144 224 238)"/>
+                <line x1="224" y1="238" x2="224" y2="216" transform="rotate(216 224 238)"/>
+                <line x1="224" y1="238" x2="224" y2="216" transform="rotate(288 224 238)"/>
+              </g>
+              <circle cx="224" cy="238" r="9" fill="#0d1b12" stroke="#86c232" stroke-width="1.5"/>
+              <path d="M204,222 A24,24 0 0 1 240,220" fill="none" stroke="#ffffff" stroke-width="2" opacity=".4" stroke-linecap="round"/>
+            </g>
+            <g>
+              <circle cx="696" cy="238" r="42" fill="url(#wheelGrad)" stroke="#1c3324" stroke-width="6"/>
+              <circle cx="696" cy="238" r="24" fill="url(#rimGrad)"/>
+              <g stroke="#0d1b12" stroke-width="4" stroke-linecap="round">
+                <line x1="696" y1="238" x2="696" y2="216" transform="rotate(0 696 238)"/>
+                <line x1="696" y1="238" x2="696" y2="216" transform="rotate(72 696 238)"/>
+                <line x1="696" y1="238" x2="696" y2="216" transform="rotate(144 696 238)"/>
+                <line x1="696" y1="238" x2="696" y2="216" transform="rotate(216 696 238)"/>
+                <line x1="696" y1="238" x2="696" y2="216" transform="rotate(288 696 238)"/>
+              </g>
+              <circle cx="696" cy="238" r="9" fill="#0d1b12" stroke="#86c232" stroke-width="1.5"/>
+              <path d="M676,222 A24,24 0 0 1 712,220" fill="none" stroke="#ffffff" stroke-width="2" opacity=".4" stroke-linecap="round"/>
+            </g>
+          </g>
+        </defs>
+
+        <!-- sombra de suelo -->
+        <ellipse cx="400" cy="298" rx="330" ry="18" fill="#000" opacity=".45"/>
+
+        <!-- reflejo: el mismo carGroup, espejado y aplastado verticalmente -->
+        <use href="#carGroup" transform="matrix(1,0,0,-0.12,0,333.76)" opacity=".22" filter="url(#reflBlur)" mask="url(#reflFade)"/>
+
+        <!-- el auto real, a tamaño normal -->
+        <use href="#carGroup"/>
+      </svg>
+
+      <!-- Hotspots — posicionados en % sobre el contenedor .hero-car-stage -->
+      <button class="hotspot" style="left:41%; top:33%;" data-category="Eléctrico" aria-label="Ver repuestos eléctricos">
+        <span class="hotspot-dot" aria-hidden="true"></span>
+        <span class="hotspot-line" aria-hidden="true"></span>
+        <span class="hotspot-label">Sistema eléctrico</span>
+      </button>
+
+      <button class="hotspot" style="left:58%; top:38%;" data-category="Motor" aria-label="Ver repuestos de motor">
+        <span class="hotspot-dot" aria-hidden="true"></span>
+        <span class="hotspot-line" aria-hidden="true"></span>
+        <span class="hotspot-label">Motor</span>
+      </button>
+
+      <button class="hotspot" style="left:91%; top:60%;" data-category="Refrigeración" aria-label="Ver repuestos de refrigeración">
+        <span class="hotspot-dot" aria-hidden="true"></span>
+        <span class="hotspot-line" aria-hidden="true"></span>
+        <span class="hotspot-label">Refrigeración</span>
+      </button>
+
+      <button class="hotspot" data-side="down" style="left:28%; top:70%;" data-category="Suspensión" aria-label="Ver repuestos de suspensión">
+        <span class="hotspot-dot" aria-hidden="true"></span>
+        <span class="hotspot-line" aria-hidden="true"></span>
+        <span class="hotspot-label">Suspensión</span>
+      </button>
+
+      <button class="hotspot" data-side="down" style="left:50%; top:70%;" data-category="Soportería" aria-label="Ver repuestos de soportería">
+        <span class="hotspot-dot" aria-hidden="true"></span>
+        <span class="hotspot-line" aria-hidden="true"></span>
+        <span class="hotspot-label">Soportería</span>
+      </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CATEGORÍAS ==================== -->
+<section id="categorias">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="kicker">Categorías</span>
+      <h2>Cinco frentes, un solo catálogo</h2>
+      <p>Organizamos cada referencia según el sistema del vehículo al que pertenece, para que llegues más rápido a lo que buscas.</p>
+    </div>
+    <div class="categories-grid" id="categoriesGrid"><!-- generado por JS --></div>
+  </div>
+</section>
+
+<!-- ==================== CATÁLOGO ==================== -->
+<section id="catalogo">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="kicker">Catálogo</span>
+      <h2>Repuestos disponibles</h2>
+      <p>Filtra por marca, categoría o escribe directamente lo que necesitas. Estos son productos de demostración para probar el catálogo.</p>
+    </div>
+
+    <div class="catalog-toolbar reveal">
+      <div class="search-field">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <label for="searchInput" class="visually-hidden">¿Qué repuesto estás buscando?</label>
+        <input type="search" id="searchInput" placeholder="¿Qué repuesto estás buscando?" autocomplete="off">
+      </div>
+
+      <div class="filters">
+        <div class="filter-group">
+          <span>Marca</span>
+          <div class="chip-row" id="brandFilters"><!-- generado por JS --></div>
+        </div>
+        <div class="filter-group">
+          <span>Categoría</span>
+          <div class="chip-row" id="categoryFilters"><!-- generado por JS --></div>
+        </div>
+      </div>
+    </div>
+
+    <p class="results-meta" id="resultsMeta" aria-live="polite"></p>
+
+    <div class="product-grid" id="productGrid"><!-- generado por JS --></div>
+
+    <div class="empty-state" id="emptyState">
+      <h3>No encontramos repuestos con esos filtros</h3>
+      <p>Prueba con otra marca, otra categoría o escríbenos por WhatsApp y te ayudamos a buscarlo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== MARCAS ==================== -->
+<section id="marcas">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="kicker">Marcas</span>
+      <h2>Trabajamos con las marcas más rodadas</h2>
+      <p>Cobertura especializada para ocho marcas. Selecciona una para filtrar el catálogo al instante.</p>
+    </div>
+    <div class="brands-grid" id="brandsGrid"><!-- generado por JS --></div>
+  </div>
+</section>
+
+<!-- ==================== NOSOTROS ==================== -->
+<section id="nosotros">
+  <div class="container about-grid">
+    <div class="about-copy reveal">
+      <span class="kicker" style="color:var(--color-accent-text);font-family:var(--font-display);font-weight:600;display:inline-block;margin-bottom:14px;">Nosotros</span>
+      <h2>Universal de Repuestos WG</h2>
+      <p>Contamos con más de 15 años de experiencia en la comercialización de repuestos automotrices, acompañando a talleres, conductores particulares y flotas en la tarea de mantener sus vehículos en movimiento.</p>
+      <p>Nuestro catálogo cubre las piezas de mayor rotación en motor, suspensión, refrigeración, sistema eléctrico y soportería, para ocho marcas ampliamente presentes en el parque automotor colombiano.</p>
+      <ul class="about-list">
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Atención personalizada en cada consulta</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Amplio catálogo por sistema del vehículo</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Especialización en marcas de alta rotación</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Compromiso con la disponibilidad y el servicio</li>
+      </ul>
+    </div>
+
+    <div class="about-stats reveal">
+      <div class="stat-card"><strong>15+</strong><span>años de experiencia</span></div>
+      <div class="stat-card"><strong>8+</strong><span>marcas especializadas</span></div>
+      <div class="stat-card wide"><strong>5</strong><span>categorías principales de repuestos</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CONTACTO ==================== -->
+<section id="contacto">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="kicker">Contacto</span>
+      <h2>Hablemos de tu repuesto</h2>
+      <p>Escríbenos por WhatsApp para la respuesta más rápida, o utiliza cualquiera de estos canales.</p>
+    </div>
+
+    <div class="contact-grid reveal">
+      <div class="contact-card">
+        <span class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 5a2 2 0 012-2h2.28a1 1 0 01.97.76l1.02 4.09a1 1 0 01-.27.95l-1.7 1.7a12.5 12.5 0 006.24 6.24l1.7-1.7a1 1 0 01.95-.27l4.09 1.02a1 1 0 01.76.97V19a2 2 0 01-2 2h-1C9.4 21 3 14.6 3 6V5z" stroke="currentColor" stroke-width="1.6"/></svg></span>
+        <div><h4>Asesor comercial</h4><p>Wilmer Capera: 310 477 2730</p></div>
+      </div>
+      <div class="contact-card">
+        <span class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 5a2 2 0 012-2h2.28a1 1 0 01.97.76l1.02 4.09a1 1 0 01-.27.95l-1.7 1.7a12.5 12.5 0 006.24 6.24l1.7-1.7a1 1 0 01.95-.27l4.09 1.02a1 1 0 01.76.97V19a2 2 0 01-2 2h-1C9.4 21 3 14.6 3 6V5z" stroke="currentColor" stroke-width="1.6"/></svg></span>
+        <div><h4>Asesor comercial</h4><p>German Rodriguez: 321 204 7803</p></div>
+      </div>
+      <div class="contact-card">
+        <span class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 21s7-7.1 7-12a7 7 0 10-14 0c0 4.9 7 12 7 12z" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="9" r="2.4" stroke="currentColor" stroke-width="1.6"/></svg></span>
+        <div><h4>Dirección</h4><p>Calle 63F #25-49</p></div>
+      </div>
+      <div class="contact-card">
+        <span class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l3 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+        <div><h4>Horario de atención</h4><p>Lunes a viernes: 8:00 a. m. – 6:00 p. m.<br>Sábados: 8:00 a. m. – 4:00 p. m.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ==================== FOOTER ==================== -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">WG</span>
+          <span class="brand-text">UNIVERSAL DE REPUESTOS<span>WG</span></span>
+        </div>
+        <p>Más de 15 años ofreciendo repuestos automotrices para las marcas de mayor rotación en Colombia.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Categorías</h4>
+        <ul id="footerCategories"><!-- generado por JS --></ul>
+      </div>
+      <div class="footer-col">
+        <h4>Marcas</h4>
+        <ul id="footerBrands"><!-- generado por JS --></ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <ul>
+          <li>Wilmer Capera: 310 477 2730</li>
+          <li>German Rodriguez: 321 204 7803</li>
+          <li>Calle 63F #25-49</li>
+          <li>Lun-vie 8am-6pm · Sáb 8am-4pm</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Universal de Repuestos WG. Todos los derechos reservados.</span>
+      <span>Sitio de demostración — imágenes y datos de ejemplo.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ==================== BOTÓN FLOTANTE DE WHATSAPP ==================== -->
+<a href="#" id="whatsappFloat" class="whatsapp-float" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">
+  <svg width="27" height="27" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 00-8.6 15L2 22l5.2-1.4A10 10 0 1012 2zm0 18a8 8 0 01-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1112 20zm4.4-5.9c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1-.2-.1-1-.4-1.9-1.2-.7-.6-1.2-1.4-1.3-1.6-.1-.2 0-.4.1-.5.1-.1.2-.3.4-.4.1-.1.2-.3.2-.4.1-.2 0-.3 0-.5s-.6-1.5-.9-2c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.2-.9.9-.9 2.2s1 2.6 1.1 2.7c.1.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1-.1-.1-.2-.2-.4-.3z"/></svg>
+</a>
+
+<!-- ==================== MODAL DE PRODUCTO ==================== -->
+<div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-box">
+    <div class="modal-media">
+      <img id="modalImage" src="" alt="">
+    </div>
+    <div class="modal-info">
+      <button class="modal-close" id="modalClose" aria-label="Cerrar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <span class="product-brand" id="modalBrand"></span>
+      <h3 id="modalTitle"></h3>
+      <div class="modal-meta">
+        <span id="modalCategory"></span>
+        <span id="modalRef"></span>
+      </div>
+      <p class="desc" id="modalDesc"></p>
+      <a href="#" id="modalWhatsapp" class="btn btn-primary" target="_blank" rel="noopener">Consultar por WhatsApp</a>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =========================================================================
+   UNIVERSAL DE REPUESTOS WG — LÓGICA DEL SITIO
+   Todo el sitio funciona con este único bloque de JavaScript, sin backend
+   ni base de datos. Los datos de categorías, marcas y productos viven en
+   los arreglos de más abajo: para actualizar el catálogo solo hay que
+   editar esos arreglos (ver instrucciones al final del archivo entregado).
+   ========================================================================= */
+
+/* -------------------------------------------------------------------------
+   1) NÚMERO DE WHATSAPP
+   REEMPLAZAR CON EL NÚMERO REAL DE WHATSAPP (formato internacional, sin '+')
+   ------------------------------------------------------------------------- */
+const WHATSAPP_NUMBER = "573104772730";
+
+/* -------------------------------------------------------------------------
+   2) CATEGORÍAS
+   'icon' es un fragmento SVG (sin la etiqueta <svg> exterior) para mantener
+   un estilo de iconografía consistente en todo el sitio.
+   ------------------------------------------------------------------------- */
+const categorias = [
+  {
+    nombre: "Motor",
+    descripcion: "Piezas internas y externas para el correcto funcionamiento del motor.",
+    icon: '<circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.6"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>'
+  },
+  {
+    nombre: "Soportería",
+    descripcion: "Soportes de motor, caja y chasis para una sujeción firme.",
+    icon: '<path d="M4 17h16M6 17V9a2 2 0 012-2h8a2 2 0 012 2v8M9 7V5a1 1 0 011-1h4a1 1 0 011 1v2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>'
+  },
+  {
+    nombre: "Suspensión",
+    descripcion: "Amortiguadores, bases y componentes para una conducción estable.",
+    icon: '<path d="M7 3v4l5 2-5 2v4M17 21v-4l-5-2 5-2V3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>'
+  },
+  {
+    nombre: "Refrigeración",
+    descripcion: "Radiadores, bombas de agua y mangueras del sistema de enfriamiento.",
+    icon: '<path d="M12 2v20M4.5 6.5l15 11M19.5 6.5l-15 11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>'
+  },
+  {
+    nombre: "Eléctrico",
+    descripcion: "Sensores, arneses y componentes del sistema eléctrico del vehículo.",
+    icon: '<path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>'
+  }
+];
+
+/* -------------------------------------------------------------------------
+   3) MARCAS
+   Cada marca tiene una ruta 'logo' de EJEMPLO dentro de img/marcas/.
+   Este proyecto no incluye los logotipos oficiales de los fabricantes
+   (son marcas registradas de cada compañía), así que esas rutas no
+   apuntan a ningún archivo todavía. Mientras el archivo no exista, el
+   sitio muestra automáticamente el distintivo con las iniciales de la
+   marca como respaldo — no hace falta tocar el código para eso.
+
+   PARA MOSTRAR EL LOGO REAL DE UNA MARCA:
+     1. Consigue el logotipo en un formato con fondo transparente
+        (.png o .svg), respetando las condiciones de uso de marca de
+        cada fabricante (muchos permiten su uso identificativo en
+        puntos de venta de repuestos, pero conviene verificarlo).
+     2. Guarda el archivo en img/marcas/ con el nombre indicado abajo.
+     3. Recarga la página: el logo reemplazará automáticamente a las
+        iniciales para esa marca.
+   ------------------------------------------------------------------------- */
+const marcas = [
+  { nombre: "Chevrolet", inicial: "CH", logo: "https://cdn.simpleicons.org/chevrolet" },
+  { nombre: "Toyota", inicial: "TY", logo: "https://cdn.simpleicons.org/toyota" },
+  { nombre: "Renault", inicial: "RN", logo: "https://cdn.simpleicons.org/renault" },
+  { nombre: "Suzuki", inicial: "SZ", logo: "https://cdn.simpleicons.org/suzuki" },
+  { nombre: "Mazda", inicial: "MZ", logo: "https://cdn.simpleicons.org/mazda" },
+  { nombre: "Kia", inicial: "KI", logo: "https://cdn.simpleicons.org/kia" },
+  { nombre: "Mitsubishi", inicial: "MT", logo: "https://cdn.simpleicons.org/mitsubishi" },
+  { nombre: "Nissan", inicial: "NS", logo: "https://cdn.simpleicons.org/nissan" }
+];
+/* Nota: los logotipos se cargan desde el CDN público de Simple Icons
+   (https://cdn.simpleicons.org), que sirve el logo oficial a color de cada
+   marca. Si en algún momento el CDN no responde para una marca puntual, el
+   atributo onerror="this.remove()" del <img> hace que las iniciales de
+   respaldo (definidas arriba) se muestren automáticamente: no requiere
+   ningún cambio de código. Son marcas registradas de cada fabricante; este
+   uso identificativo en un punto de venta de repuestos suele estar
+   permitido, pero conviene confirmarlo si el sitio pasa a producción. */
+
+/* -------------------------------------------------------------------------
+   4) PRODUCTOS — CATÁLOGO
+   ------------------------------------------------------------------------
+   PARA AGREGAR UN PRODUCTO NUEVO:
+     1. Copia una imagen a la carpeta  img/productos/
+     2. Agrega un objeto nuevo a este arreglo, con la misma forma que los
+        de abajo (nombre, categoria, marca, imagen, referencia, descripcion).
+     3. Guarda el archivo y recarga la página. Eso es todo.
+
+   Nota técnica: por seguridad, un navegador no puede "leer" automáticamente
+   el contenido de una carpeta local. Por eso este arreglo hace las veces
+   de índice del catálogo: es la forma más simple y mantenible de listar
+   productos sin depender de un backend o una base de datos.
+
+   Las imágenes de este arreglo son rutas de EJEMPLO (img/productos/...).
+   Reemplázalas por tus propias fotografías con el mismo nombre de archivo,
+   o actualiza la ruta 'imagen' de cada producto.
+   ------------------------------------------------------------------------- */
+const productos = [
+  { nombre: "Radiador de NPR REWARD", categoria: "Refrigeración", marca: "Chevrolet", imagen: "img/productos/producto-01.jpg", referencia: "WG-001", descripcion: "Radiador de aluminio de alto flujo, producto de demostración." },
+  { nombre: "Radiador de aluminio", categoria: "Refrigeración", marca: "Toyota", imagen: "img/productos/producto-02.jpg", referencia: "WG-002", descripcion: "Radiador de aluminio de alto flujo, producto de demostración." },
+  { nombre: "Kit de amortiguadores", categoria: "Suspensión", marca: "Renault", imagen: "img/productos/producto-03.jpg", referencia: "WG-003", descripcion: "Par de amortiguadores delanteros, ejemplo de catálogo." },
+  { nombre: "Base de motor", categoria: "Soportería", marca: "Suzuki", imagen: "img/productos/producto-04.jpg", referencia: "WG-004", descripcion: "Soporte de motor en caucho reforzado, producto de demostración." },
+  { nombre: "Alternador", categoria: "Eléctrico", marca: "Mazda", imagen: "img/productos/producto-05.jpg", referencia: "WG-005", descripcion: "Alternador reconstruido, ejemplo de catálogo." },
+  { nombre: "Kit de distribución", categoria: "Motor", marca: "Kia", imagen: "img/productos/producto-06.jpg", referencia: "WG-006", descripcion: "Kit de banda de distribución con tensores, producto de demostración." },
+  { nombre: "Sensor de oxígeno", categoria: "Eléctrico", marca: "Mitsubishi", imagen: "img/productos/producto-07.jpg", referencia: "WG-007", descripcion: "Sensor de oxígeno de repuesto, ejemplo de catálogo." },
+  { nombre: "Terminal de dirección", categoria: "Suspensión", marca: "Nissan", imagen: "img/productos/producto-08.jpg", referencia: "WG-008", descripcion: "Terminal de dirección izquierdo, producto de demostración." },
+  { nombre: "Soporte de caja", categoria: "Soportería", marca: "Chevrolet", imagen: "img/productos/producto-09.jpg", referencia: "WG-009", descripcion: "Soporte de caja de cambios, ejemplo de catálogo." },
+  { nombre: "Termostato", categoria: "Refrigeración", marca: "Toyota", imagen: "img/productos/producto-10.jpg", referencia: "WG-010", descripcion: "Termostato con carcasa incluida, producto de demostración." },
+  { nombre: "Kit de bujías", categoria: "Motor", marca: "Renault", imagen: "img/productos/producto-11.jpg", referencia: "WG-011", descripcion: "Juego de bujías de iridio, ejemplo de catálogo." },
+  { nombre: "Motor de arranque", categoria: "Eléctrico", marca: "Suzuki", imagen: "img/productos/producto-12.jpg", referencia: "WG-012", descripcion: "Motor de arranque reconstruido, producto de demostración." },
+
+  { nombre: "Kit de juntas de motor", categoria: "Motor", marca: "Kia", imagen: "img/productos/producto-13.jpg", referencia: "WG-013", descripcion: "Juego completo de empaquetaduras de motor, ejemplo de catálogo." },
+  { nombre: "Bomba de aceite", categoria: "Motor", marca: "Nissan", imagen: "img/productos/producto-14.jpg", referencia: "WG-014", descripcion: "Bomba de aceite de lubricación, producto de demostración." },
+  { nombre: "Filtro de aceite", categoria: "Motor", marca: "Chevrolet", imagen: "img/productos/producto-15.jpg", referencia: "WG-015", descripcion: "Filtro de aceite de alta filtración, ejemplo de catálogo." },
+  { nombre: "Cadena de distribución", categoria: "Motor", marca: "Mazda", imagen: "img/productos/producto-16.jpg", referencia: "WG-016", descripcion: "Cadena de tiempo con guías incluidas, producto de demostración." },
+  { nombre: "Kit de pistones y anillos", categoria: "Motor", marca: "Toyota", imagen: "img/productos/producto-17.jpg", referencia: "WG-017", descripcion: "Juego de pistones con anillos, ejemplo de catálogo." },
+  { nombre: "Múltiple de admisión", categoria: "Motor", marca: "Renault", imagen: "img/productos/producto-18.jpg", referencia: "WG-018", descripcion: "Múltiple de admisión de aluminio, producto de demostración." },
+  { nombre: "Sensor de posición del cigüeñal", categoria: "Eléctrico", marca: "Suzuki", imagen: "img/productos/producto-19.jpg", referencia: "WG-019", descripcion: "Sensor CKP para sincronización del motor, ejemplo de catálogo." },
+  { nombre: "Correa poly-V", categoria: "Motor", marca: "Mitsubishi", imagen: "img/productos/producto-20.jpg", referencia: "WG-020", descripcion: "Correa de accesorios multicanal, producto de demostración." },
+
+  { nombre: "Soporte de motor delantero", categoria: "Soportería", marca: "Chevrolet", imagen: "img/productos/producto-21.jpg", referencia: "WG-021", descripcion: "Soporte delantero en caucho reforzado, ejemplo de catálogo." },
+  { nombre: "Soporte de motor trasero", categoria: "Soportería", marca: "Toyota", imagen: "img/productos/producto-22.jpg", referencia: "WG-022", descripcion: "Soporte trasero de motor, producto de demostración." },
+  { nombre: "Soporte de caja automática", categoria: "Soportería", marca: "Kia", imagen: "img/productos/producto-23.jpg", referencia: "WG-023", descripcion: "Soporte para transmisión automática, ejemplo de catálogo." },
+  { nombre: "Soporte de barra estabilizadora", categoria: "Soportería", marca: "Nissan", imagen: "img/productos/producto-24.jpg", referencia: "WG-024", descripcion: "Soporte para barra estabilizadora delantera, producto de demostración." },
+  { nombre: "Soporte de radiador", categoria: "Soportería", marca: "Mazda", imagen: "img/productos/producto-25.jpg", referencia: "WG-025", descripcion: "Soporte inferior de radiador, ejemplo de catálogo." },
+  { nombre: "Soporte de amortiguador", categoria: "Soportería", marca: "Renault", imagen: "img/productos/producto-26.jpg", referencia: "WG-026", descripcion: "Base superior de amortiguador, producto de demostración." },
+
+  { nombre: "Rótula de suspensión", categoria: "Suspensión", marca: "Suzuki", imagen: "img/productos/producto-27.jpg", referencia: "WG-027", descripcion: "Rótula inferior de suspensión, ejemplo de catálogo." },
+  { nombre: "Bieleta de suspensión", categoria: "Suspensión", marca: "Mitsubishi", imagen: "img/productos/producto-28.jpg", referencia: "WG-028", descripcion: "Bieleta de barra estabilizadora, producto de demostración." },
+  { nombre: "Buje de suspensión delantera", categoria: "Suspensión", marca: "Chevrolet", imagen: "img/productos/producto-29.jpg", referencia: "WG-029", descripcion: "Buje de brazo de suspensión, ejemplo de catálogo." },
+  { nombre: "Resorte helicoidal", categoria: "Suspensión", marca: "Toyota", imagen: "img/productos/producto-30.jpg", referencia: "WG-030", descripcion: "Resorte de suspensión delantero, producto de demostración." },
+  { nombre: "Amortiguador trasero", categoria: "Suspensión", marca: "Kia", imagen: "img/productos/producto-31.jpg", referencia: "WG-031", descripcion: "Amortiguador trasero a gas, ejemplo de catálogo." },
+  { nombre: "Caja de dirección", categoria: "Suspensión", marca: "Nissan", imagen: "img/productos/producto-32.jpg", referencia: "WG-032", descripcion: "Caja de dirección mecánica, producto de demostración." },
+  { nombre: "Terminal de dirección derecho", categoria: "Suspensión", marca: "Mazda", imagen: "img/productos/producto-33.jpg", referencia: "WG-033", descripcion: "Terminal de dirección lado derecho, ejemplo de catálogo." },
+
+  { nombre: "Ventilador de radiador", categoria: "Refrigeración", marca: "Renault", imagen: "img/productos/producto-34.jpg", referencia: "WG-034", descripcion: "Motoventilador de radiador, producto de demostración." },
+  { nombre: "Manguera superior de radiador", categoria: "Refrigeración", marca: "Suzuki", imagen: "img/productos/producto-35.jpg", referencia: "WG-035", descripcion: "Manguera superior de refrigeración, ejemplo de catálogo." },
+  { nombre: "Tapa de radiador", categoria: "Refrigeración", marca: "Mitsubishi", imagen: "img/productos/producto-36.jpg", referencia: "WG-036", descripcion: "Tapa de radiador a presión, producto de demostración." },
+  { nombre: "Sensor de temperatura del motor", categoria: "Refrigeración", marca: "Chevrolet", imagen: "img/productos/producto-37.jpg", referencia: "WG-037", descripcion: "Sensor de temperatura del refrigerante, ejemplo de catálogo." },
+  { nombre: "Depósito de refrigerante", categoria: "Refrigeración", marca: "Toyota", imagen: "img/productos/producto-38.jpg", referencia: "WG-038", descripcion: "Depósito recuperador de refrigerante, producto de demostración." },
+  { nombre: "Electroventilador", categoria: "Refrigeración", marca: "Kia", imagen: "img/productos/producto-39.jpg", referencia: "WG-039", descripcion: "Electroventilador de doble hélice, ejemplo de catálogo." },
+
+  { nombre: "Batería 12V", categoria: "Eléctrico", marca: "Nissan", imagen: "img/productos/producto-40.jpg", referencia: "WG-040", descripcion: "Batería de arranque de 12V, producto de demostración." },
+  { nombre: "Bobina de encendido", categoria: "Eléctrico", marca: "Mazda", imagen: "img/productos/producto-41.jpg", referencia: "WG-041", descripcion: "Bobina de encendido individual, ejemplo de catálogo." },
+  { nombre: "Módulo de control del motor", categoria: "Eléctrico", marca: "Renault", imagen: "img/productos/producto-42.jpg", referencia: "WG-042", descripcion: "Módulo ECU de control del motor, producto de demostración." },
+
+  { nombre: "Culata de motor", categoria: "Motor", marca: "Chevrolet", imagen: "img/productos/producto-43.jpg", referencia: "WG-043", descripcion: "Culata reconstruida con válvulas incluidas, ejemplo de catálogo." },
+  { nombre: "Cárter de aceite", categoria: "Motor", marca: "Toyota", imagen: "img/productos/producto-44.jpg", referencia: "WG-044", descripcion: "Cárter de aceite con empaque, producto de demostración." },
+  { nombre: "Filtro de aire", categoria: "Motor", marca: "Renault", imagen: "img/productos/producto-45.jpg", referencia: "WG-045", descripcion: "Filtro de aire de alto flujo, ejemplo de catálogo." },
+  { nombre: "Filtro de combustible", categoria: "Motor", marca: "Suzuki", imagen: "img/productos/producto-46.jpg", referencia: "WG-046", descripcion: "Filtro de combustible en línea, producto de demostración." },
+  { nombre: "Bomba de combustible", categoria: "Motor", marca: "Mazda", imagen: "img/productos/producto-47.jpg", referencia: "WG-047", descripcion: "Bomba eléctrica de combustible, ejemplo de catálogo." },
+  { nombre: "Inyector de combustible", categoria: "Motor", marca: "Kia", imagen: "img/productos/producto-48.jpg", referencia: "WG-048", descripcion: "Inyector de alta presión, producto de demostración." },
+  { nombre: "Turbocompresor", categoria: "Motor", marca: "Mitsubishi", imagen: "img/productos/producto-49.jpg", referencia: "WG-049", descripcion: "Turbocompresor reconstruido, ejemplo de catálogo." },
+  { nombre: "Múltiple de escape", categoria: "Motor", marca: "Nissan", imagen: "img/productos/producto-50.jpg", referencia: "WG-050", descripcion: "Múltiple de escape en fundición, producto de demostración." },
+  { nombre: "Junta de culata", categoria: "Motor", marca: "Chevrolet", imagen: "img/productos/producto-51.jpg", referencia: "WG-051", descripcion: "Junta de culata multicapa, ejemplo de catálogo." },
+  { nombre: "Polea de cigüeñal", categoria: "Motor", marca: "Toyota", imagen: "img/productos/producto-52.jpg", referencia: "WG-052", descripcion: "Polea amortiguadora de cigüeñal, producto de demostración." },
+
+  { nombre: "Soporte de motor lado derecho", categoria: "Soportería", marca: "Renault", imagen: "img/productos/producto-53.jpg", referencia: "WG-053", descripcion: "Soporte de motor lado derecho, ejemplo de catálogo." },
+  { nombre: "Soporte de motor lado izquierdo", categoria: "Soportería", marca: "Suzuki", imagen: "img/productos/producto-54.jpg", referencia: "WG-054", descripcion: "Soporte de motor lado izquierdo, producto de demostración." },
+  { nombre: "Soporte de escape", categoria: "Soportería", marca: "Mazda", imagen: "img/productos/producto-55.jpg", referencia: "WG-055", descripcion: "Soporte colgante del sistema de escape, ejemplo de catálogo." },
+  { nombre: "Buje de soporte de motor", categoria: "Soportería", marca: "Kia", imagen: "img/productos/producto-56.jpg", referencia: "WG-056", descripcion: "Buje de caucho para soporte de motor, producto de demostración." },
+  { nombre: "Soporte de radiador superior", categoria: "Soportería", marca: "Mitsubishi", imagen: "img/productos/producto-57.jpg", referencia: "WG-057", descripcion: "Soporte superior de radiador, ejemplo de catálogo." },
+
+  { nombre: "Rodamiento de rueda delantero", categoria: "Suspensión", marca: "Nissan", imagen: "img/productos/producto-58.jpg", referencia: "WG-058", descripcion: "Rodamiento sellado de rueda delantera, producto de demostración." },
+  { nombre: "Maza de rueda", categoria: "Suspensión", marca: "Chevrolet", imagen: "img/productos/producto-59.jpg", referencia: "WG-059", descripcion: "Maza con rodamiento integrado, ejemplo de catálogo." },
+  { nombre: "Rótula superior de suspensión", categoria: "Suspensión", marca: "Toyota", imagen: "img/productos/producto-60.jpg", referencia: "WG-060", descripcion: "Rótula superior de suspensión, producto de demostración." },
+  { nombre: "Bieleta delantera", categoria: "Suspensión", marca: "Renault", imagen: "img/productos/producto-61.jpg", referencia: "WG-061", descripcion: "Bieleta de barra estabilizadora delantera, ejemplo de catálogo." },
+  { nombre: "Muelle trasero", categoria: "Suspensión", marca: "Suzuki", imagen: "img/productos/producto-62.jpg", referencia: "WG-062", descripcion: "Resorte helicoidal trasero, producto de demostración." },
+  { nombre: "Buje de barra estabilizadora", categoria: "Suspensión", marca: "Mazda", imagen: "img/productos/producto-63.jpg", referencia: "WG-063", descripcion: "Buje de caucho para barra estabilizadora, ejemplo de catálogo." },
+
+  { nombre: "Manguera inferior de radiador", categoria: "Refrigeración", marca: "Kia", imagen: "img/productos/producto-64.jpg", referencia: "WG-064", descripcion: "Manguera inferior de refrigeración, producto de demostración." },
+  { nombre: "Sensor de nivel de refrigerante", categoria: "Refrigeración", marca: "Mitsubishi", imagen: "img/productos/producto-65.jpg", referencia: "WG-065", descripcion: "Sensor de nivel del depósito de refrigerante, ejemplo de catálogo." },
+  { nombre: "Junta de bomba de agua", categoria: "Refrigeración", marca: "Nissan", imagen: "img/productos/producto-66.jpg", referencia: "WG-066", descripcion: "Junta de sellado para bomba de agua, producto de demostración." },
+  { nombre: "Radiador de aceite", categoria: "Refrigeración", marca: "Chevrolet", imagen: "img/productos/producto-67.jpg", referencia: "WG-067", descripcion: "Radiador enfriador de aceite de motor, ejemplo de catálogo." },
+
+  { nombre: "Regulador de voltaje", categoria: "Eléctrico", marca: "Toyota", imagen: "img/productos/producto-68.jpg", referencia: "WG-068", descripcion: "Regulador de voltaje del alternador, producto de demostración." },
+  { nombre: "Relé de arranque", categoria: "Eléctrico", marca: "Renault", imagen: "img/productos/producto-69.jpg", referencia: "WG-069", descripcion: "Relé de arranque del motor, ejemplo de catálogo." },
+  { nombre: "Sensor ABS", categoria: "Eléctrico", marca: "Suzuki", imagen: "img/productos/producto-70.jpg", referencia: "WG-070", descripcion: "Sensor de velocidad de rueda para sistema ABS, producto de demostración." },
+  { nombre: "Motor de vidrios eléctricos", categoria: "Eléctrico", marca: "Mazda", imagen: "img/productos/producto-71.jpg", referencia: "WG-071", descripcion: "Motorreductor de elevavidrios, ejemplo de catálogo." },
+  { nombre: "Módulo de airbag", categoria: "Eléctrico", marca: "Kia", imagen: "img/productos/producto-72.jpg", referencia: "WG-072", descripcion: "Módulo de control de airbag, producto de demostración." }
+];
+
+/* =========================================================================
+   ESTADO DE FILTROS
+   ========================================================================= */
+const state = { marca: "Todas", categoria: "Todas", busqueda: "" };
+
+/* =========================================================================
+   UTILIDADES
+   ========================================================================= */
+function crearMensajeWhatsapp(producto){
+  const texto = `Hola, estoy interesado en el repuesto ${producto.nombre}, referencia ${producto.referencia}. ¿Podrían brindarme información sobre disponibilidad y precio?`;
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(texto)}`;
+}
+
+function contarPorCategoria(nombreCategoria){
+  return productos.filter(p => p.categoria === nombreCategoria).length;
+}
+function contarPorMarca(nombreMarca){
+  return productos.filter(p => p.marca === nombreMarca).length;
+}
+
+/* =========================================================================
+   RENDER: CATEGORÍAS
+   ========================================================================= */
+function renderCategorias(){
+  const grid = document.getElementById("categoriesGrid");
+  grid.innerHTML = categorias.map(cat => `
+    <button class="category-card reveal" data-categoria="${cat.nombre}">
+      <span class="category-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none">${cat.icon}</svg></span>
+      <h3>${cat.nombre}</h3>
+      <p>${cat.descripcion}</p>
+      <span class="category-count">${contarPorCategoria(cat.nombre)} referencias</span>
+    </button>
+  `).join("");
+
+  grid.querySelectorAll(".category-card").forEach(card => {
+    card.addEventListener("click", () => {
+      aplicarFiltroCategoria(card.dataset.categoria);
+      irACatalogo();
+    });
+  });
+
+  // Footer: enlaces rápidos de categorías
+  document.getElementById("footerCategories").innerHTML = categorias.map(cat =>
+    `<li><a href="#catalogo" data-categoria="${cat.nombre}">${cat.nombre}</a></li>`
+  ).join("");
+  document.querySelectorAll("#footerCategories a").forEach(a => {
+    a.addEventListener("click", (e) => {
+      e.preventDefault();
+      aplicarFiltroCategoria(a.dataset.categoria);
+      irACatalogo();
+    });
+  });
+}
+
+/* =========================================================================
+   RENDER: MARCAS
+   ========================================================================= */
+function renderMarcas(){
+  const grid = document.getElementById("brandsGrid");
+  grid.innerHTML = marcas.map(m => `
+    <button class="brand-tile reveal" data-marca="${m.nombre}">
+      <span class="brand-badge">
+        <span class="brand-initial" aria-hidden="true">${m.inicial}</span>
+        <img class="brand-logo-img" src="${m.logo}" alt="Logo de ${m.nombre}" loading="lazy"
+             onerror="this.remove()">
+      </span>
+      <span>${m.nombre}</span>
+    </button>
+  `).join("");
+
+  grid.querySelectorAll(".brand-tile").forEach(tile => {
+    tile.addEventListener("click", () => {
+      aplicarFiltroMarca(tile.dataset.marca);
+      irACatalogo();
+    });
+  });
+
+  document.getElementById("footerBrands").innerHTML = marcas.map(m =>
+    `<li><a href="#catalogo" data-marca="${m.nombre}">${m.nombre}</a></li>`
+  ).join("");
+  document.querySelectorAll("#footerBrands a").forEach(a => {
+    a.addEventListener("click", (e) => {
+      e.preventDefault();
+      aplicarFiltroMarca(a.dataset.marca);
+      irACatalogo();
+    });
+  });
+}
+
+/* =========================================================================
+   RENDER: CHIPS DE FILTROS
+   ========================================================================= */
+function renderChips(){
+  const brandWrap = document.getElementById("brandFilters");
+  const catWrap = document.getElementById("categoryFilters");
+
+  const brandOptions = ["Todas", ...marcas.map(m => m.nombre)];
+  const catOptions = ["Todas", ...categorias.map(c => c.nombre)];
+
+  brandWrap.innerHTML = brandOptions.map(nombre =>
+    `<button class="chip ${nombre === state.marca ? "active" : ""}" data-value="${nombre}">${nombre}</button>`
+  ).join("");
+
+  catWrap.innerHTML = catOptions.map(nombre =>
+    `<button class="chip ${nombre === state.categoria ? "active" : ""}" data-value="${nombre}">${nombre}</button>`
+  ).join("");
+
+  brandWrap.querySelectorAll(".chip").forEach(chip => {
+    chip.addEventListener("click", () => aplicarFiltroMarca(chip.dataset.value));
+  });
+  catWrap.querySelectorAll(".chip").forEach(chip => {
+    chip.addEventListener("click", () => aplicarFiltroCategoria(chip.dataset.value));
+  });
+}
+
+function aplicarFiltroMarca(nombre){
+  state.marca = nombre;
+  renderChips();
+  renderCatalogo();
+}
+function aplicarFiltroCategoria(nombre){
+  state.categoria = nombre;
+  renderChips();
+  renderCatalogo();
+}
+function irACatalogo(){
+  document.getElementById("catalogo").scrollIntoView({ behavior: "smooth" });
+}
+
+/* =========================================================================
+   RENDER: CATÁLOGO DE PRODUCTOS
+   ========================================================================= */
+function productosFiltrados(){
+  const texto = state.busqueda.trim().toLowerCase();
+  return productos.filter(p => {
+    const coincideMarca = state.marca === "Todas" || p.marca === state.marca;
+    const coincideCategoria = state.categoria === "Todas" || p.categoria === state.categoria;
+    const coincideBusqueda = !texto ||
+      p.nombre.toLowerCase().includes(texto) ||
+      p.descripcion.toLowerCase().includes(texto) ||
+      p.referencia.toLowerCase().includes(texto);
+    return coincideMarca && coincideCategoria && coincideBusqueda;
+  });
+}
+
+function renderCatalogo(){
+  const grid = document.getElementById("productGrid");
+  const empty = document.getElementById("emptyState");
+  const meta = document.getElementById("resultsMeta");
+  const lista = productosFiltrados();
+
+  meta.innerHTML = `Mostrando <strong>${lista.length}</strong> de ${productos.length} repuestos`;
+
+  if (lista.length === 0){
+    grid.innerHTML = "";
+    empty.classList.add("visible");
+    return;
+  }
+  empty.classList.remove("visible");
+
+  grid.innerHTML = lista.map((p, i) => `
+    <article class="product-card reveal" data-index="${productos.indexOf(p)}">
+      <div class="product-media">
+        <span class="product-tag">${p.categoria}</span>
+        <img src="${p.imagen}" alt="${p.nombre} — ${p.marca}" loading="lazy"
+             onerror="this.src='https://placehold.co/500x375/0d1b12/86c232?text=${encodeURIComponent(p.nombre)}'">
+      </div>
+      <div class="product-body">
+        <span class="product-brand">${p.marca}</span>
+        <h3>${p.nombre}</h3>
+        <span class="product-ref">Ref. ${p.referencia}</span>
+        <p class="product-desc">${p.descripcion}</p>
+        <div class="product-actions">
+          <button class="btn-card ghost" data-action="detalle" data-index="${productos.indexOf(p)}">Ver detalle</button>
+          <button class="btn-card primary" data-action="consultar" data-index="${productos.indexOf(p)}">Consultar</button>
+        </div>
+      </div>
+    </article>
+  `).join("");
+
+  grid.querySelectorAll('[data-action="detalle"]').forEach(btn => {
+    btn.addEventListener("click", () => abrirModal(productos[btn.dataset.index]));
+  });
+  grid.querySelectorAll('[data-action="consultar"]').forEach(btn => {
+    btn.addEventListener("click", () => {
+      window.open(crearMensajeWhatsapp(productos[btn.dataset.index]), "_blank", "noopener");
+    });
+  });
+  grid.querySelectorAll(".product-media img").forEach(img => {
+    img.parentElement.addEventListener("click", (e) => {
+      const card = e.currentTarget.closest(".product-card");
+      abrirModal(productos[card.dataset.index]);
+    });
+  });
+
+  observarReveals();
+}
+
+/* =========================================================================
+   BUSCADOR EN TIEMPO REAL
+   ========================================================================= */
+document.getElementById("searchInput").addEventListener("input", (e) => {
+  state.busqueda = e.target.value;
+  renderCatalogo();
+});
+
+/* =========================================================================
+   MODAL DE PRODUCTO
+   ========================================================================= */
+const modalOverlay = document.getElementById("modalOverlay");
+
+function abrirModal(p){
+  document.getElementById("modalImage").src = p.imagen;
+  document.getElementById("modalImage").alt = `${p.nombre} — ${p.marca}`;
+  document.getElementById("modalImage").onerror = function(){
+    this.src = `https://placehold.co/600x450/0d1b12/86c232?text=${encodeURIComponent(p.nombre)}`;
+  };
+  document.getElementById("modalBrand").textContent = p.marca;
+  document.getElementById("modalTitle").textContent = p.nombre;
+  document.getElementById("modalCategory").textContent = p.categoria;
+  document.getElementById("modalRef").textContent = `Ref. ${p.referencia}`;
+  document.getElementById("modalDesc").textContent = p.descripcion;
+  document.getElementById("modalWhatsapp").href = crearMensajeWhatsapp(p);
+
+  modalOverlay.classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+function cerrarModal(){
+  modalOverlay.classList.remove("open");
+  document.body.style.overflow = "";
+}
+document.getElementById("modalClose").addEventListener("click", cerrarModal);
+modalOverlay.addEventListener("click", (e) => { if (e.target === modalOverlay) cerrarModal(); });
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") cerrarModal(); });
+
+/* =========================================================================
+   BOTÓN FLOTANTE DE WHATSAPP (mensaje genérico)
+   ========================================================================= */
+const mensajeGenerico = "Hola, estoy interesado en conocer más sobre sus repuestos automotrices.";
+document.getElementById("whatsappFloat").href =
+  `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensajeGenerico)}`;
+
+/* =========================================================================
+   HOTSPOTS DEL AUTOMÓVIL → FILTRAN Y NAVEGAN AL CATÁLOGO
+   ========================================================================= */
+document.querySelectorAll(".hotspot").forEach(spot => {
+  spot.addEventListener("click", () => {
+    aplicarFiltroCategoria(spot.dataset.category);
+    aplicarFiltroMarca("Todas");
+    irACatalogo();
+  });
+});
+
+/* =========================================================================
+   MODO OSCURO / MODO CLARO
+   El tema se guarda en localStorage bajo la clave 'wg-theme' para que se
+   recuerde en la próxima visita. Si el navegador bloquea el almacenamiento
+   (por ejemplo al abrir el archivo directamente con doble clic en algunos
+   navegadores), el cambio simplemente dura lo que dure la sesión actual.
+   ========================================================================= */
+const themeToggle = document.getElementById("themeToggle");
+const rootEl = document.documentElement;
+
+function actualizarBotonTema(){
+  const esClaro = rootEl.getAttribute("data-theme") === "light";
+  themeToggle.setAttribute("aria-pressed", String(esClaro));
+  themeToggle.setAttribute("aria-label", esClaro ? "Cambiar a modo oscuro" : "Cambiar a modo claro");
+}
+actualizarBotonTema();
+
+themeToggle.addEventListener("click", () => {
+  const esClaroAhora = rootEl.getAttribute("data-theme") === "light";
+  if (esClaroAhora){
+    rootEl.removeAttribute("data-theme");
+  } else {
+    rootEl.setAttribute("data-theme", "light");
+  }
+  try{
+    localStorage.setItem("wg-theme", esClaroAhora ? "dark" : "light");
+  }catch(e){ /* almacenamiento no disponible; el cambio solo dura esta sesión */ }
+  actualizarBotonTema();
+});
+
+/* =========================================================================
+   NAVBAR: cambio de apariencia en scroll + menú móvil
+   ========================================================================= */
+const navbar = document.getElementById("navbar");
+window.addEventListener("scroll", () => {
+  navbar.classList.toggle("scrolled", window.scrollY > 30);
+}, { passive: true });
+
+const navToggle = document.getElementById("navToggle");
+const navLinks = document.getElementById("navLinks");
+navToggle.addEventListener("click", () => {
+  const abierto = navLinks.classList.toggle("open");
+  navToggle.classList.toggle("open", abierto);
+  navToggle.setAttribute("aria-expanded", abierto);
+});
+navLinks.querySelectorAll("a").forEach(a => {
+  a.addEventListener("click", () => {
+    navLinks.classList.remove("open");
+    navToggle.classList.remove("open");
+    navToggle.setAttribute("aria-expanded", "false");
+  });
+});
+
+/* =========================================================================
+   ANIMACIONES DE APARICIÓN AL HACER SCROLL (IntersectionObserver)
+   ========================================================================= */
+let revealObserver;
+function observarReveals(){
+  if (!revealObserver){
+    revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting){
+          entry.target.classList.add("visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+  }
+  document.querySelectorAll(".reveal:not(.visible)").forEach(el => revealObserver.observe(el));
+}
+
+/* =========================================================================
+   EFECTO 3D INTERACTIVO DEL AUTO DEL HERO
+   Inclina .hero-car-stage (el SVG + los hotspots, como una sola pieza)
+   según la posición del cursor dentro de .hero-car-wrap, simulando un
+   objeto real flotando en un espacio 3D. Cuando el mouse no está encima,
+   una animación CSS (heroIdleTilt) mantiene una leve inclinación
+   automática. Se desactiva por completo si el usuario prefiere menos
+   movimiento en pantalla.
+   ========================================================================= */
+const heroCarWrap = document.getElementById("heroCarWrap");
+const heroCarStage = document.getElementById("heroCarStage");
+const prefiereMenosMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+if (heroCarWrap && heroCarStage && !prefiereMenosMovimiento){
+  heroCarWrap.addEventListener("mouseenter", () => {
+    heroCarStage.classList.add("stage-manual");
+  });
+  heroCarWrap.addEventListener("mousemove", (e) => {
+    const rect = heroCarWrap.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width;  // 0 a 1, de izquierda a derecha
+    const y = (e.clientY - rect.top) / rect.height;  // 0 a 1, de arriba a abajo
+    const rotateY = (x - 0.5) * 26;  // gira sobre el eje vertical: -13° a 13°
+    const rotateX = (0.5 - y) * 16;  // gira sobre el eje horizontal: -8° a 8°
+    heroCarStage.style.transform = `perspective(1400px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+  });
+  heroCarWrap.addEventListener("mouseleave", () => {
+    heroCarStage.classList.remove("stage-manual");
+    heroCarStage.style.transform = "";
+  });
+}
+
+/* =========================================================================
+   INICIALIZACIÓN
+   ========================================================================= */
+renderCategorias();
+renderMarcas();
+renderChips();
+renderCatalogo();
+observarReveals();
+</script>
+</body>
+</html>
